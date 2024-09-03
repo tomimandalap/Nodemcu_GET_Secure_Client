@@ -12,8 +12,8 @@
 #include <ArduinoJson.h>
 
 // Variable dan value untuk ssid dan password WiFi
-const char* ssid = "";
-const char* password = "";
+const char* ssid = "One More Shot";
+const char* password = "Di9i7alNa7i*ns#";
 
 // Define variable ip dan url www.reqres.in untuk check ping
 // IPAddress ip (192, 168, 110, 1); 
@@ -91,12 +91,31 @@ void getHttp() {
 
     // Jika request berhasil (kode HTTP 200)
     if (httpCode > 0) {
-      Serial.printf("HTTP GET... code: %d\n", httpCode);
+        Serial.printf("HTTP GET... code: %d\n", httpCode);
         // Ambil respon dari server
         if (httpCode == HTTP_CODE_OK) {
           String payload = http.getString();
-          Serial.println("Response:");
-          Serial.println(payload); // Menampilkan respon API
+          // Serial.print("Response: ");
+          // Serial.println(payload); // Menampilkan respon API
+
+          /*
+            GAMBARAN BENTUK RESPONSE SUCCESS
+            {
+              "data":{"id":1,"email":"george.bluth@reqres.in","first_name":"George","last_name":"Bluth","avatar":"https://reqres.in/img/faces/1-image.jpg"},
+              "support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}
+            }
+          */
+
+          JsonDocument doc;
+          deserializeJson(doc, payload);
+
+          String data = doc["data"].as<String>();
+          String support = doc["support"].as<String>();
+          String email = doc["data"]["email"].as<String>();
+          
+          Serial.println(data);
+          Serial.println(support);
+          Serial.println(email);
         }
       } else {
         // Jika request gagal
