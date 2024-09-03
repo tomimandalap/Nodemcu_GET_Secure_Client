@@ -77,12 +77,12 @@ void connection() {
 }
 
 // Method GET HTTP DATA
-const char* apiUrl = "https://reqres.in/api/users/1";
+const char* apiDetailUser = "https://reqres.in/api/users/1";
 void getHttp() {
   // Pastikan telah terhubung ke Wi-Fi
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
-    http.begin(client, apiUrl);
+    http.begin(client, apiDetailUser);
     
     int httpCode = http.GET(); // Kirimkan GET request
 
@@ -91,9 +91,9 @@ void getHttp() {
         Serial.printf("HTTP GET... code: %d\n", httpCode);
         // Ambil respon dari server
         if (httpCode == HTTP_CODE_OK) {
-          String payload = http.getString();
+          String response = http.getString();
           // Serial.print("Response: ");
-          // Serial.println(payload); // Menampilkan respon API
+          // Serial.println(response); // Menampilkan respon API
 
           /*
             GAMBARAN BENTUK RESPONSE SUCCESS
@@ -104,11 +104,15 @@ void getHttp() {
           */
 
           JsonDocument doc;
-          deserializeJson(doc, payload);
+          // convert string to object
+          deserializeJson(doc, response);
 
-          String data = doc["data"].as<String>();
-          String support = doc["support"].as<String>();
-          String email = doc["data"]["email"].as<String>();
+          // extract the data
+          JsonObject object = doc.as<JsonObject>();
+
+          String data = object["data"];
+          String support = object["support"];
+          String email = object["data"]["email"];
           
           Serial.println(data);
           Serial.println(support);
