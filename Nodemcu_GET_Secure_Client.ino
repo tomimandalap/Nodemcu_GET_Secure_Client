@@ -45,9 +45,7 @@ void loop() {
   // Mengecek apakah interval waktu telah berlalu
   if (currentMillis - previousMillis >= interval) {
     previousMillis = currentMillis; // Memperbarui waktu terakhir request
-
     getHttp();
-    // postHttp();
   }
 }
 
