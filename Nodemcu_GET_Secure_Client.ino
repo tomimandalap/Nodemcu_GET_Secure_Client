@@ -83,9 +83,6 @@ void getHttp() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     http.begin(client, apiUrl);
-    http.addHeader("User-Agent", "ESP8266");
-    http.addHeader("Accept", "*/*");
-    http.addHeader("Content-Type", "application/json");
     
     int httpCode = http.GET(); // Kirimkan GET request
 
