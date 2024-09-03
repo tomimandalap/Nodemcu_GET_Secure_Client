@@ -47,6 +47,7 @@ void loop() {
     previousMillis = currentMillis; // Memperbarui waktu terakhir request
 
     getHttp();
+    // postHttp();
   }
 }
 
@@ -77,7 +78,7 @@ void connection() {
 }
 
 // Method GET HTTP DATA
-const char* apiDetailUser = "https://reqres.in/api/users/1";
+const char* apiDetailUser = "https://66d6c87a006bfbe2e64e9265.mockapi.io/api/v1/data/1";
 void getHttp() {
   // Pastikan telah terhubung ke Wi-Fi
   if (WiFi.status() == WL_CONNECTED) {
@@ -97,10 +98,7 @@ void getHttp() {
 
           /*
             GAMBARAN BENTUK RESPONSE SUCCESS
-            {
-              "data":{"id":1,"email":"george.bluth@reqres.in","first_name":"George","last_name":"Bluth","avatar":"https://reqres.in/img/faces/1-image.jpg"},
-              "support":{"url":"https://reqres.in/#support-heading","text":"To keep ReqRes free, contributions towards server costs are appreciated!"}
-            }
+            {"createdAt":1725352030,"suhu":28,"id":"1"}
           */
 
           JsonDocument doc;
@@ -109,14 +107,11 @@ void getHttp() {
 
           // extract the data
           JsonObject object = doc.as<JsonObject>();
-
-          String data = object["data"];
-          String support = object["support"];
-          String email = object["data"]["email"];
+          String suhu = object["suhu"];
           
-          Serial.println(data);
-          Serial.println(support);
-          Serial.println(email);
+          Serial.print("Respnonse: ");
+          Serial.println(response);
+          Serial.println(suhu);
         }
       } else {
         // Jika request gagal
