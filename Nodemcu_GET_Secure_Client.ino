@@ -12,8 +12,8 @@
 #include <ArduinoJson.h>
 
 // Variable dan value untuk ssid dan password WiFi
-const char* ssid = "One More Shot";
-const char* password = "Di9i7alNa7i*ns#";
+const char* ssid = "";
+const char* password = "";
 
 // Define variable ip dan url www.reqres.in untuk check ping
 // IPAddress ip (192, 168, 110, 1); 
